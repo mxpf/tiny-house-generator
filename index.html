@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tiny House Generator</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+    <script src="export.js"></script>
+    <script src="drawing-utils.js"></script>
+    <script src="houses.js"></script>
+    <script src="sketch.js"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #ded9c5;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+      }
+
+      .app {
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) auto;
+        place-items: center;
+        box-sizing: border-box;
+        padding: 28px;
+        gap: 18px;
+      }
+
+      .canvas-wrap {
+        min-width: 0;
+        min-height: 0;
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      canvas {
+        width: auto !important;
+        height: auto !important;
+        max-width: calc(100vw - 56px);
+        max-height: calc(100vh - 132px);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.14);
+      }
+
+      .commands {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        color: rgba(8, 35, 160, 0.82);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+        user-select: none;
+      }
+
+      .command {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      kbd {
+        min-width: 22px;
+        padding: 4px 7px;
+        border: 1px solid rgba(8, 35, 160, 0.28);
+        border-bottom-width: 2px;
+        border-radius: 5px;
+        background: rgba(241, 238, 220, 0.8);
+        color: rgb(8, 35, 160);
+        font: inherit;
+        font-size: 12px;
+        line-height: 1;
+        text-align: center;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+      }
+
+      .hint {
+        color: rgba(8, 35, 160, 0.52);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="app">
+      <div class="canvas-wrap"></div>
+
+      <div class="commands" aria-label="Keyboard commands">
+        <span class="command"><kbd>Space</kbd> new house</span>
+        <span class="command"><kbd>F</kbd> choose folder</span>
+        <span class="command"><kbd>S</kbd> save PNG</span>
+        <span class="command"><kbd>B</kbd> save 10 PNGs</span>
+        <span class="command"><kbd>D</kbd> debug boxes</span>
+        <span class="hint">exports at 1150 × 1536</span>
+      </div>
+    </main>
+  </body>
+</html>
