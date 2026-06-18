@@ -14,6 +14,9 @@ function setup() {
   paper = color(241, 238, 220);
 
   seed = floor(random(999999));
+
+  console.log("Initial seed:", seed);
+
   strokeCap(ROUND);
   strokeJoin(ROUND);
   noLoop();
@@ -26,23 +29,45 @@ function draw() {
   background(paper);
   drawPaperTexture();
 
-  push();
+  try {
+    push();
 
-  translate(width / 2, height * 0.648);
-  scale(random(1.16, 1.34));
+    translate(width / 2, height * 0.648);
+    scale(random(1.16, 1.34));
 
-  resetDebugLayout();
-  drawTinyHouse();
-  drawDebugLayoutOverlay();
+    resetDebugLayout();
+    drawTinyHouse();
+    drawDebugLayoutOverlay();
 
-  pop();
+    pop();
 
-  drawSubtleInkSpecks();
+    drawSubtleInkSpecks();
+  } catch (err) {
+    try {
+      pop();
+    } catch (popErr) {
+      // Ignore pop errors if the drawing stack was already balanced.
+    }
+
+    console.error("Render failed on seed:", seed);
+    console.error(err);
+
+    push();
+    fill(ink);
+    noStroke();
+    textSize(18);
+    textAlign(CENTER, CENTER);
+    text("Render failed", width / 2, height / 2 - 18);
+    textSize(13);
+    text("Seed: " + seed, width / 2, height / 2 + 8);
+    pop();
+  }
 }
 
 function keyPressed() {
   if (key === " ") {
     seed = floor(random(999999));
+    console.log("New seed:", seed);
     redraw();
   }
 
@@ -60,6 +85,7 @@ function keyPressed() {
 
   if (key === "d" || key === "D") {
     DEBUG_LAYOUT = !DEBUG_LAYOUT;
+    console.log("DEBUG_LAYOUT:", DEBUG_LAYOUT);
     redraw();
   }
 }
